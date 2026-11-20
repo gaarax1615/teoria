@@ -21,6 +21,8 @@ Evaluador de expresiones matemáticas:
 
 Python 3 con Tkinter (incluido en la instalación estándar). Sin dependencias externas.
 
+En macOS, el `python3` del sistema (`/usr/bin/python3`) trae Tk 8.5, que muestra la ventana en blanco. Usa un Python con Tk 8.6 o superior (python.org, Homebrew o `uv`), por ejemplo `python3.12 calculadora_gui.py`.
+
 ## Uso
 
 ```bash

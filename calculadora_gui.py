@@ -1,6 +1,6 @@
 """
 Interfaz gráfica de la calculadora (Tkinter).
-Ejecutar:  python calculadora_gui.py
+
 """
 
 import tkinter as tk
@@ -8,7 +8,7 @@ from tkinter import ttk
 
 from analizador import ErrorExpr, evaluar, formato
 
-# Botones distintos a la calculadora del compañero (otras funciones y orden)
+# Teclado: funciones, paréntesis y operadores
 FILAS = [
     ["abs(", "exp(", "ln(", "sqrt(", "cos("],
     ["(", ")", "^", "CE", "⌫"],

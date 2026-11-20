@@ -8,7 +8,6 @@ Partió de compilador_proyecto.py. Cambios principales:
   - Asociatividad izquierda en + - * /; derecha en ^.
   - Mensajes de error en español con posición.
 
-Consola:  python analizador.py "2+3*abs(-4)"
 """
 
 from __future__ import annotations
@@ -127,8 +126,6 @@ class Lexer:
                     f"Carácter o número no válido cerca de '{mal}' (pos. {inicio + 1})"
                 )
 
-    def unget(self, token: dict) -> None:
-        self.fuente.seek(token["position"])
 
 
 # ---------------------------------------------------------------------------
@@ -182,7 +179,8 @@ def _potencia(a: float, b: float) -> float:
 #   T  -> U T'
 #   T' -> * U T' | / U T' | ε
 #   U  -> - U | P
-#   P  -> F ( ^ U )?
+#   P  -> F P'
+#   P' -> ^ U | ε
 #   F  -> num | ( E ) | id ( E )
 # ---------------------------------------------------------------------------
 class Parser:
@@ -295,17 +293,8 @@ def formato(valor: float) -> str:
     return f"{valor:.10g}"
 
 
-def _desde_archivo(ruta: str) -> None:
-    with open(ruta, "r", encoding="utf-8") as f:
-        contenido = f.read()
-    tokens, valor = evaluar(contenido)
-    print("Tokens:", " ".join(f"{t['type']}({t['lexema']})" for t in tokens))
-    print("Result:", formato(valor))
-    print("OK")
-
-
 def main() -> None:
-    if len(sys.argv) == 2 and not sys.argv[1].startswith("-"):
+    if len(sys.argv) == 2:
         arg = sys.argv[1]
         try:
             # si existe como archivo, se lee; si no, se trata como expresión
@@ -320,7 +309,7 @@ def main() -> None:
             sys.exit(1)
         else:
             print("Tokens:", " ".join(f"{t['type']}({t['lexema']})" for t in tokens))
-            print("Result:", formato(valor))
+            print("Resultado:", formato(valor))
             print("OK")
             return
 
@@ -332,7 +321,7 @@ def main() -> None:
             print("ERROR:", e, file=sys.stderr)
             sys.exit(1)
         print("Tokens:", " ".join(f"{t['type']}({t['lexema']})" for t in tokens))
-        print("Result:", formato(valor))
+        print("Resultado:", formato(valor))
         print("OK")
         return
 
@@ -350,7 +339,7 @@ def main() -> None:
             print("ERROR:", e, file=sys.stderr)
         else:
             print("Tokens:", " ".join(f"{t['type']}({t['lexema']})" for t in tokens))
-            print("Result:", formato(valor))
+            print("Resultado:", formato(valor))
             print("OK")
 
 
